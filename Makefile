@@ -1,5 +1,5 @@
-#----- Assignment 6 Makefile -----#
-obj-m		:= atomic_linked_list.o
+#----- Assignment 10 Makefile -----#
+obj-m		:= atomic_linked_list_module.o
 KERNEL_DIR	:= /lib/modules/$(shell uname -r)/build
 PWD		:= $(shell pwd)
 

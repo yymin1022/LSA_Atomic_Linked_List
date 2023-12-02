@@ -1,0 +1,12 @@
+*.ko
+*.mod*
+*.o
+*.order
+.*.cmd
+.*.swp
+
+Module.symvers
+?? atomic_linked_list.ko
+?? atomic_linked_list.mod
+?? atomic_linked_list.mod.c
+?? modules.order

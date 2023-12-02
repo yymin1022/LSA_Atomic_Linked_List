@@ -1,5 +1,8 @@
 #----- Assignment 10 Makefile -----#
-obj-m		:= atomic_linked_list_module.o
+TARGET		= ll_sync_module
+
+obj-m		:= $(TARGET).o
+$(TARGET)-y	:= ll_sync_module_main.o ll_sync.o
 KERNEL_DIR	:= /lib/modules/$(shell uname -r)/build
 PWD		:= $(shell pwd)
 

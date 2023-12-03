@@ -1,3 +1,4 @@
+/*
 #ifndef __CALCLOCK_H
 #define __CALCLOCK_H
 
@@ -63,13 +64,26 @@ do {										\
 	__ktprint(depth, #funcname, timesum, countsum);				\
 } while (0)
 
-#else /* !CONFIG_CALCLOCK */
+#else / !CONFIG_CALCLOCK /
 #define ktget(clock)
 #define ktput(localclock, funcname)
 #define ktprint(depth, funcname)
-#endif /* CONFIG_CALCLOCK */
+#endif / CONFIG_CALCLOCK /
 
 #define calclock(a, b, c)
 #define CALCLOCK_DEF(a)
 
-#endif /* __CALCLOCK_H */
+#endif / __CALCLOCK_H /
+*/
+
+#ifndef __CALCLOCK_H
+#define __CALCLOCK_H
+
+#include <linux/time.h>
+
+#define BILLION 1000000000UL
+
+unsigned long long calclock(struct timespec *myclock, unsigned long long *total_time, unsigned long long *total_count);
+
+#endif
+

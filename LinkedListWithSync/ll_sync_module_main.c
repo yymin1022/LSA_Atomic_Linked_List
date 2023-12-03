@@ -6,10 +6,16 @@
 
 MODULE_LICENSE("GPL");
 
+int	range_bound[4][2] = {
+	{0, 249999},
+	{250000, 499999},
+	{500000, 749999},
+	{750000, 999999}
+};
+
 int	__init atomic_ll_init(void)
 {
 	printk ("Linked List with Sync 20194094 Yongmin Yoo\n");
-	test_print();
 	return (0);
 }
 

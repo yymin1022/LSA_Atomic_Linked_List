@@ -2,7 +2,7 @@
 #include <linux/module.h>
 #include <linux/init.h>
 
-#include "ll_sync.h"
+#include "linked_list_impl.h"
 
 MODULE_LICENSE("GPL");
 

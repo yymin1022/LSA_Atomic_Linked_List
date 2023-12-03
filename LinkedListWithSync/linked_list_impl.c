@@ -1,4 +1,4 @@
-#include "ll_sync.h"
+#include "linked_list_impl.h"
 
 void	*add_to_list(int thread_id, int *range_bound)
 {

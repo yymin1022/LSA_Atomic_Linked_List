@@ -2,7 +2,7 @@
 TARGET		= ll_sync_module
 
 obj-m		:= $(TARGET).o
-$(TARGET)-y	:= ll_sync_module_main.o ll_sync.o
+$(TARGET)-y	:= ll_sync_module_main.o linked_list_impl.o calclock.o
 KERNEL_DIR	:= /lib/modules/$(shell uname -r)/build
 PWD		:= $(shell pwd)
 

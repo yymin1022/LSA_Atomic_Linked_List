@@ -24,7 +24,6 @@ static int	list_iter(void *arg)
 
 	tid = *(int *)arg;
 	iter_range = range_bound[tid];
-	printk ("Thread #%d Range: %d ~ %d\n", tid, iter_range[0], iter_range[1]);
 	list_head = add_to_list(tid, iter_range);
 	search_list(tid, list_head, iter_range);
 	del_from_list(tid, iter_range);

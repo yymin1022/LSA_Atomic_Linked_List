@@ -1,7 +1,9 @@
 #ifndef LINKED_LIST_SYNC
 # define LINKED_LIST_SYNC
+# include <linux/delay.h>
 # include <linux/list.h>
 # include <linux/module.h>
+# include <linux/spinlock.h>
 # include "calclock.h"
 
 void	*add_to_list(int thread_id, int *range_bound);

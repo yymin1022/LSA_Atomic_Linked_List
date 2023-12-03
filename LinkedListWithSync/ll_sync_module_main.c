@@ -1,8 +1,9 @@
 #include <linux/delay.h>
 #include <linux/init.h>
 #include <linux/kernel.h>
-#include <linux/module.h>
 #include <linux/kthread.h>
+#include <linux/module.h>
+#include <linux/slab.h>
 
 #include "linked_list_impl.h"
 
@@ -15,28 +16,35 @@ int	range_bound[4][2] = {
 	{750000, 999999}
 };
 
-static int	list_iter(int *tid, int range_idx)
+static int	list_iter(void *arg)
 {
+	int	tid;
 	int	*iter_range;
 	void	*list_head;
 
-	iter_range = range_bound[range_idx];
-	list_head = add_to_list(*tid, iter_range);
-	search_list(*tid, list_head, iter_range);
-	del_from_list(*tid, iter_range);
-	while (!kthread_should_stop())
-		msleep(500);
-	printk (KERN_INFO "Thread #%d Stopped!\n", *tid);
+	tid = *(int *)arg;
+	iter_range = range_bound[tid];
+	printk ("Thread #%d Range: %d ~ %d\n", tid, iter_range[0], iter_range[1]);
+	list_head = add_to_list(tid, iter_range);
+	search_list(tid, list_head, iter_range);
+	del_from_list(tid, iter_range);
+	printk ("Thread #%d Stopped!\n", tid);
 	return (0);
 }
 
 int		__init atomic_ll_init(void)
 {
-	int	tid;
+	int	i;
+	int	*arg;
 
-	tid = 1234;
-	list_iter(&tid, 0);
-	printk ("Linked List with Sync 20194094 Yongmin Yoo\n");
+	printk ("LL with Sync Start: 20194094 Yongmin Yoo\n");
+	for (i = 0; i < 4; i++)
+	{
+		arg = (int *)kmalloc(sizeof(int), GFP_KERNEL);
+		*arg = i;
+		kthread_run (&list_iter, (void *)arg, "Linked List");
+	}
+	printk ("LL with Sync Exit: 20194094 Yongmin Yoo\n");
 	return (0);
 }
 

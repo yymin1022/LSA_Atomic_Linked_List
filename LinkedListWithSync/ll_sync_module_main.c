@@ -1,19 +1,14 @@
-#include <linux/delay.h>
-#include <linux/init.h>
-#include <linux/kernel.h>
-#include <linux/kthread.h>
-#include <linux/module.h>
-#include <linux/slab.h>
-
 #include "linked_list_impl.h"
 
 MODULE_LICENSE("GPL");
 
+struct task_struct **threads;
+
 int	range_bound[4][2] = {
-	{0, 2499},
-	{2500, 4999},
-	{5000, 7499},
-	{7500, 9999}
+	{0, 249999},
+	{250000, 499999},
+	{500000, 749999},
+	{750000, 999999}
 };
 
 static int	list_iter(void *arg)
@@ -25,32 +20,46 @@ static int	list_iter(void *arg)
 	tid = *(int *)arg;
 	iter_range = range_bound[tid];
 	list_head = add_to_list(tid, iter_range);
-	search_list(tid, list_head, iter_range);
-	del_from_list(tid, iter_range);
+	search_list (tid, list_head, iter_range);
+	del_from_list (tid, iter_range);
+	while(!kthread_should_stop())
+		msleep(100);
 	printk ("Thread #%d Stopped!\n", tid);
 	return (0);
 }
 
-int		__init atomic_ll_init(void)
+int		__init ll_sync_init(void)
 {
 	int	i;
 	int	*arg;
 
 	printk ("LL with Sync Start: 20194094 Yongmin Yoo\n");
+	threads = (struct task_struct **)kmalloc(sizeof(struct task_struct *) * 4, GFP_KERNEL);
 	for (i = 0; i < 4; i++)
 	{
 		arg = (int *)kmalloc(sizeof(int), GFP_KERNEL);
 		*arg = i;
-		kthread_run (&list_iter, (void *)arg, "Linked List");
+		threads[i] = kthread_run (&list_iter, (void *)arg, "Linked List");
 	}
-	printk ("LL with Sync Exit: 20194094 Yongmin Yoo\n");
 	return (0);
 }
 
-void		__exit atomic_ll_cleanup(void)
+void		__exit ll_sync_cleanup(void)
 {
+	int	i;
+
+	for(i = 0; i < 4; i++)
+	{
+		if (threads[i])
+		{
+			kthread_stop(threads[i]);
+			threads[i] = NULL;
+			kfree(threads[i]);
+		}
+	}
+	kfree(threads);
 	printk ("Linked List with Sync Module Removed\n");
 }
 
-module_init(atomic_ll_init);
-module_exit(atomic_ll_cleanup);
+module_init(ll_sync_init);
+module_exit(ll_sync_cleanup);

@@ -1,10 +1,14 @@
 #ifndef LINKED_LIST_SYNC
 # define LINKED_LIST_SYNC
 # include <linux/delay.h>
+# include <linux/init.h>
+# include <linux/kernel.h>
+# include <linux/kthread.h>
 # include <linux/list.h>
 # include <linux/module.h>
 # include <linux/slab.h>
 # include <linux/spinlock.h>
+
 # include "calclock.h"
 
 typedef struct {

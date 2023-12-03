@@ -1,37 +1,16 @@
 #include "ll_sync.h"
 
-void	list_add(struct list_head *new, struct list_head *head)
+void	*add_to_list(int thread_id, int *range_bound)
 {
 	
 }
 
-void	list_add_tail(struct list_head *new, struct  list_head *head)
+void	*search_list(int thread_id, void *data, int *range_bound)
 {
 	
 }
 
-void	list_del(struct list_head *entry)
+void	*del_from_list(int thread_id, int *range_bound)
 {
 	
-}
-
-void	list_move(struct list_head *list, struct list_head *head)
-{
-	
-}
-
-void	list_move_tail(struct list_head *list, struct list_head *head)
-{
-	
-}
-
-void	list_splice(const struct list_head *list, struct list_head *head)
-{
-	
-}
-
-void	test_print(void)
-{
-	printk("Test Print from LL with Sync Module");
-	return;
 }

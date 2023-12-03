@@ -4,6 +4,9 @@ MODULE_LICENSE("GPL");
 
 struct task_struct **threads;
 
+extern unsigned long long cnt_add, cnt_search, cnt_del;
+extern unsigned long long time_add, time_search, time_del;
+
 int	range_bound[4][2] = {
 	{0, 249999},
 	{250000, 499999},
@@ -13,6 +16,7 @@ int	range_bound[4][2] = {
 
 static int	list_iter(void *arg)
 {
+
 	int	tid;
 	int	*iter_range;
 	void	*list_head;
@@ -44,10 +48,18 @@ int		__init ll_sync_init(void)
 	return (0);
 }
 
+static void	print_calclock(char *func_name, unsigned long long cnt, unsigned long long time)
+{
+	printk("Function %s is called %llu times, and the time interval is %lluns\n", func_name, cnt, time);
+}
+
 void		__exit ll_sync_cleanup(void)
 {
 	int	i;
 
+	print_calclock("add_to_list", cnt_add, time_add);
+	print_calclock("search_list", cnt_search, time_search);
+	print_calclock("del_from_list", cnt_del, time_del);
 	for(i = 0; i < 4; i++)
 	{
 		if (threads[i])

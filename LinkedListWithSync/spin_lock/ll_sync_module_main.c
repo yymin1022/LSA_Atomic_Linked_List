@@ -34,7 +34,7 @@ int		__init ll_sync_init(void)
 	int	i;
 	int	*arg;
 
-	printk ("LL with Sync Start: 20194094 Yongmin Yoo\n");
+	printk ("LL with Sync(spin_lock) Start: 20194094 Yongmin Yoo\n");
 	threads = (struct task_struct **)kmalloc(sizeof(struct task_struct *) * 4, GFP_KERNEL);
 	for (i = 0; i < 4; i++)
 	{
@@ -70,7 +70,7 @@ void		__exit ll_sync_cleanup(void)
 		}
 	}
 	kfree(threads);
-	printk ("Linked List with Sync Module Removed\n");
+	printk ("LL with Sync(spin_lock) Exit: Module Removed\n");
 }
 
 module_init(ll_sync_init);
